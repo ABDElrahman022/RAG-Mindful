@@ -5,4 +5,4 @@ sentence-transformers==3.2.0
 langchain==0.1.6
 langchain-core==0.1.23
 langchain-community==0.0.19
-pinecone-client-3.2.2
+pinecone-client==3.2.2
