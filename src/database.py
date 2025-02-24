@@ -6,9 +6,12 @@ from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
-
+# for streamlit cloud 
+import streamlit as st
+MONGODB_URI = st.secrets["MONGO_URI"]
+client = MongoClient(MONGODB_URI)
 # Connect to MongoDB
-client = MongoClient(os.getenv("MONGO_URI"))
+# client = MongoClient(os.getenv("MONGO_URI"))
 db = client["mindful_chatbot"]
 chat_collection = db["chats"]
 
