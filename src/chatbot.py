@@ -79,6 +79,8 @@ prompt = PromptTemplate(template=template, input_variables=["context", "question
 # Define the RAG pipeline
 rag_chain = prompt | llm
 
+import re
+
 def generate_response(user_input, chat_history=[]):
     """Generate a chatbot response using RAG and previous chat history."""
     retrieved_docs = docsearch.similarity_search(user_input, k=3)
@@ -89,4 +91,15 @@ def generate_response(user_input, chat_history=[]):
         "question": user_input,
         "pasts": chat_history if isinstance(chat_history, list) else [chat_history]
     })
-    return result
+
+    # 🔹 If `result` is a dictionary containing an "answer" key, return its value
+    if isinstance(result, dict) and "answer" in result:
+        return result["answer"].strip()  # Return only the assistant's response
+    
+    # 🔹 If `result` is a string containing "Answer:", extract the response using Regex
+    match = re.search(r"Answer:\s*(.*)", str(result), re.DOTALL)
+    if match:
+        return match.group(1).strip()
+
+    # 🔹 If no answer is found, return the cleaned result
+    return str(result).strip()
