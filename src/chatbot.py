@@ -14,8 +14,9 @@ load_dotenv()
 
 # Load API keys
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
-HF_KEY_API = os.getenv("HF_KEY_API")
-
+# HF_KEY_API = os.getenv("HF_KEY_API")
+import streamlit as st
+HF_KEY_API = st.secrets["HF_KEY_API"]
 # Initialize Pinecone client
 pc = PineconeClient(api_key=PINECONE_API_KEY)
 
